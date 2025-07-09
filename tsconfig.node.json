@@ -1,0 +1,44 @@
+{
+  // 📘【このファイルの目的】
+  // TypeScript コンパイラの設定ファイル。
+  // プロジェクト内の型チェックやビルド設定を定義するために使用される。
+
+  "compilerOptions": {
+    // --------------------- 🧱 ビルド情報の保存先 ---------------------
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo", // 増分ビルド用キャッシュファイルの保存先
+
+    // --------------------- 🧠 コンパイル対象のJavaScript仕様 ---------------------
+    "target": "ES2022", // 出力するJSのバージョン（モダンブラウザ向け）
+    "lib": ["ES2023"], // 利用可能なライブラリ（例：PromiseやMapなど）
+
+    // --------------------- 🔗 モジュールの出力形式 ---------------------
+    "module": "ESNext", // 出力モジュール形式（ES Modules）
+
+    // --------------------- 🚫 型チェックに関する省略設定 ---------------------
+    "skipLibCheck": true, // node_modules内の型チェックをスキップ（ビルド高速化）
+
+    // --------------------- 🔁 増分・複合ビルド ---------------------
+    "incremental": true, // 前回のビルド結果を活用して差分のみ再ビルド
+    "composite": true, // 複数の tsconfig をまたいで依存構造を管理可能に
+
+    // --------------------- 📦 モジュール解決方式とESM対応 ---------------------
+    "moduleResolution": "bundler", // ViteやESBuildに適したモジュール解決方式
+    "allowImportingTsExtensions": true, // `.ts`, `.tsx` 拡張子付きインポートを許可
+    "verbatimModuleSyntax": true, // import/export文の記述をそのまま保持
+    "moduleDetection": "force", // 明示的にモジュールとして扱う
+
+    // --------------------- 📤 出力抑制 ---------------------
+    "noEmit": true, // 実際のJSファイルは出力せず、型チェックだけ行う
+
+    // --------------------- ✅ 厳格モード ---------------------
+    "strict": true, // 厳格な型チェック（推奨）
+    "noUnusedLocals": true, // 未使用の変数があればエラー
+    "noUnusedParameters": true, // 未使用の関数引数があればエラー
+    "esModuleInterop": true, // CommonJSとの互換性を向上
+    "noFallthroughCasesInSwitch": true, // switch文での意図しないfallthroughを防止
+    "noUncheckedIndexedAccess": true // 配列・オブジェクトのインデックスアクセスに型チェックを強化
+  },
+
+  // --------------------- 📁 対象ファイル ---------------------
+  "include": ["vite.config.ts"] // この設定は Vite の設定ファイルにのみ適用される
+}

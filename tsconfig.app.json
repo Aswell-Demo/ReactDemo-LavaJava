@@ -1,0 +1,41 @@
+{
+  // 📘【このファイルの目的】
+  // React アプリケーション本体（src 以下）で使用される TypeScript コンパイル設定。
+  // モダンなブラウザ環境と JSX（React）に対応し、厳格な型チェックと高速開発を実現する。
+
+  "compilerOptions": {
+    // --------------------- 🧱 増分ビルド ---------------------
+    "incremental": true, // 差分ビルドを有効化（変更があった部分のみ再ビルド）
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo", // ビルド情報をキャッシュするファイルパス
+
+    // --------------------- ⚙ 出力対象の仕様 ---------------------
+    "target": "ES2022", // 出力するJavaScriptのバージョン（ES2022）
+    "useDefineForClassFields": true, // クラスフィールドを `define` 形式で出力（より明確な仕様）
+
+    // --------------------- 📚 使用するライブラリ ---------------------
+    "lib": ["ES2022", "DOM", "DOM.Iterable"], // ECMAScript仕様 + ブラウザAPI（DOM）に対応
+
+    // --------------------- 📦 モジュール形式 ---------------------
+    "module": "ESNext", // ES Modules を利用（import/export）
+    "skipLibCheck": true, // 型定義ファイル（*.d.ts）のチェックを省略（高速化）
+
+    // --------------------- ⚡️ バンドラー向け設定（Vite/ESBuild向き） ---------------------
+    "moduleResolution": "bundler", // バンドラー専用のモジュール解決方式
+    "allowImportingTsExtensions": true, // `.ts`, `.tsx` の拡張子を含む import を許可
+    "verbatimModuleSyntax": true, // import/export 文を変換せずにそのまま扱う
+    "moduleDetection": "force", // 明示的に全ファイルをモジュールとして扱う
+    "noEmit": true, // 実際のJSファイルを出力しない（開発・型チェック専用）
+
+    // --------------------- 🎨 JSXサポート（React用） ---------------------
+    "jsx": "react-jsx", // React 17以降の JSX 変換方式に対応（`import React from 'react'` 不要）
+
+    // --------------------- ✅ 型安全性の強化（リント的役割も含む） ---------------------
+    "strict": true, // 厳格な型チェックを有効化（推奨）
+    "noUnusedLocals": true, // 使用されていないローカル変数があるとエラー
+    "noUnusedParameters": true, // 使用されていない関数引数があるとエラー
+    "noFallthroughCasesInSwitch": true // switch文の意図しない fallthrough をエラーにする
+  },
+
+  // --------------------- 📁 対象ファイルの範囲 ---------------------
+  "include": ["src"] // `src` フォルダ配下の全ファイルを型チェック対象に含める
+}
