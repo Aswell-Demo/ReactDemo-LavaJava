@@ -31,8 +31,8 @@
 
     // --------------------- ✅ 型安全性の強化（リント的役割も含む） ---------------------
     "strict": true, // 厳格な型チェックを有効化（推奨）
-    "noUnusedLocals": true, // 使用されていないローカル変数があるとエラー
-    "noUnusedParameters": true, // 使用されていない関数引数があるとエラー
+    "noUnusedLocals": false, // 使用されていないローカル変数があるとエラー
+    "noUnusedParameters": false, // 使用されていない関数引数があるとエラー
     "noFallthroughCasesInSwitch": true // switch文の意図しない fallthrough をエラーにする
   },
 

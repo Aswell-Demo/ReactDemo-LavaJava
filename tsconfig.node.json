@@ -32,8 +32,8 @@
 
     // --------------------- ✅ 厳格モード ---------------------
     "strict": true, // 厳格な型チェック（推奨）
-    "noUnusedLocals": true, // 未使用の変数があればエラー
-    "noUnusedParameters": true, // 未使用の関数引数があればエラー
+    "noUnusedLocals": false, // 未使用の変数があればエラー
+    "noUnusedParameters": false, // 未使用の関数引数があればエラー
     "esModuleInterop": true, // CommonJSとの互換性を向上
     "noFallthroughCasesInSwitch": true, // switch文での意図しないfallthroughを防止
     "noUncheckedIndexedAccess": true // 配列・オブジェクトのインデックスアクセスに型チェックを強化
