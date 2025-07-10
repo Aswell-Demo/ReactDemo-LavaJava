@@ -90,7 +90,7 @@ const RegisterForm: React.FC<Props> = ({ onLoginClick }) => {
             style={{
               position: "relative",
               display: "flex",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <input
@@ -111,7 +111,7 @@ const RegisterForm: React.FC<Props> = ({ onLoginClick }) => {
                 transform: "translateY(-50%)",
                 cursor: "pointer",
                 fontSize: "1.2rem",
-                color: "#888"
+                color: "#888",
               }}
             ></i>
           </div>
@@ -151,7 +151,7 @@ const RegisterForm: React.FC<Props> = ({ onLoginClick }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "0.5rem"
+            gap: "0.5rem",
           }}
         >
           {isLoading ? (

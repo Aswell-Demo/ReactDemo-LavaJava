@@ -7,10 +7,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import {
-  verifyPasswordResetCode,
-  confirmPasswordReset,
-} from "firebase/auth";
+import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
 import { auth } from "../../firebase";
 
 const ResetPassword: React.FC = () => {
@@ -31,7 +28,7 @@ const ResetPassword: React.FC = () => {
       verifyPasswordResetCode(auth, code)
         .then(() => setConfirmed(true))
         .catch(() =>
-          setMessage("リンクが無効、または有効期限が切れています。")
+          setMessage("リンクが無効、または有効期限が切れています。"),
         );
     } else {
       setMessage("無効なリクエストです。");
@@ -50,7 +47,9 @@ const ResetPassword: React.FC = () => {
 
     try {
       await confirmPasswordReset(auth, oobCode, newPassword);
-      setMessage("✅ パスワードを変更しました。ログイン画面から再度ログインしてください。");
+      setMessage(
+        "✅ パスワードを変更しました。ログイン画面から再度ログインしてください。",
+      );
       setConfirmed(false); // フォーム非表示
     } catch (error: any) {
       setMessage("パスワード変更に失敗しました：" + error.message);

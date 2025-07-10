@@ -1,16 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap");
 
-body{
-  font-family: 'Noto Sans JP', sans-serif;
+body {
+  font-family: "Noto Sans JP", sans-serif;
   background: #e5e5e5;
   margin: 0;
 }
 
-
 /* =========================================
   📝 パスワード再設定画面（ResetPassword Page）
 ========================================= */
-
 
 /* 🔲 コンテナ全体のスタイル設定
    ・最大幅を 420px に設定し、中央に配置
@@ -310,22 +308,22 @@ body{
 }
 
 .nav-button.logout-button {
-  border:1px solid #0753a6;
+  border: 1px solid #0753a6;
   font-size: 1rem;
   border-radius: 30px;
   background-color: white;
   border-radius: 10px;
   color: #0553a6;
   transition: all 0.3s ease;
-}  
+}
 
 .nav-button.logout-button:hover {
   color: white;
   background-color: #0553a6;
 }
 
-.nav-button.logout-button i{
-  font-size: .9rem;
+.nav-button.logout-button i {
+  font-size: 0.9rem;
 }
 
 /* =========================================

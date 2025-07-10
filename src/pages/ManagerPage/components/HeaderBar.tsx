@@ -39,7 +39,7 @@ const HeaderBar: React.FC<Props> = ({ name, role }) => {
       {/* 🔓 右側：ログアウトボタン */}
       <div className="manager-header-right">
         <button className="nav-button logout-button" onClick={handleLogout}>
-        <i className='bx bx-log-in'></i> ログアウト
+          <i className="bx bx-log-in"></i> ログアウト
         </button>
       </div>
     </header>

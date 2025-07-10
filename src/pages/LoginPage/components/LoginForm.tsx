@@ -32,47 +32,50 @@ const LoginForm: React.FC<{
   // ✅ 通常ログイン処理
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     // 🔍 入力チェック
     if (!email || !password) {
       setError("メールアドレスとパスワードを入力してください。");
       return;
     }
-  
+
     setError("");
     setIsLoading(true); // ⏳ ローディング状態開始
-  
+
     try {
       await onLogin(email, password); // 🔐 Firebase 認証呼び出し
     } finally {
       setIsLoading(false); // ✅ 認証終了後はローディングを終了（成功・失敗問わず）
     }
   };
-  
 
   // 🔐 パスワードリセット送信
   // 🔐 パスワードリセットメール送信処理
-const handlePasswordReset = async (e: React.FormEvent) => {
-  e.preventDefault(); // 🔁 フォームのデフォルト動作を無効化
+  const handlePasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault(); // 🔁 フォームのデフォルト動作を無効化
 
-  try {
-    // 📩 Firebase Auth 経由でリセットメールを送信（カスタムURLを指定）
-    await sendPasswordResetEmail(auth, resetEmail, {
-      url: "https://react-demo-lava-java.vercel.app/reset-password", // 🔗 自作ページに遷移させる
-      handleCodeInApp: true, // ✅ この設定がないと Firebase のデフォ画面が表示される
-    });
+    try {
+      // 📩 Firebase Auth 経由でリセットメールを送信（カスタムURLを指定）
+      await sendPasswordResetEmail(auth, resetEmail, {
+        url: "https://react-demo-lava-java.vercel.app/reset-password", // 🔗 自作ページに遷移させる
+        handleCodeInApp: true, // ✅ この設定がないと Firebase のデフォ画面が表示される
+      });
 
-    // ✅ 成功メッセージ表示
-    setResetMessage("パスワードリセット用のメールを送信しました。ご確認ください。");
-  } catch (error: any) {
-    // ❌ 失敗時のエラーメッセージ
-    setResetMessage("送信に失敗しました：" + error.message);
-  }
-};
-
+      // ✅ 成功メッセージ表示
+      setResetMessage(
+        "パスワードリセット用のメールを送信しました。<br />ご確認ください。",
+      );
+    } catch (error: any) {
+      // ❌ 失敗時のエラーメッセージ
+      setResetMessage("送信に失敗しました：" + error.message);
+    }
+  };
 
   return (
-    <div className="login-container" style={{ padding: "2rem", position: "relative" }}>
+    <div
+      className="login-container"
+      style={{ padding: "2rem", position: "relative" }}
+    >
       {/* 🏷 タイトル */}
       <h2 className="login-title">ログイン</h2>
 
@@ -91,7 +94,14 @@ const handlePasswordReset = async (e: React.FormEvent) => {
 
         <div className="login-field">
           <label className="login-label">パスワード：</label>
-          <div className="login-password-wrapper" style={{ position: "relative", display: "flex", alignItems: "center" }}>
+          <div
+            className="login-password-wrapper"
+            style={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <input
               className="login-input"
               type={showPassword ? "text" : "password"}
@@ -110,7 +120,7 @@ const handlePasswordReset = async (e: React.FormEvent) => {
                 transform: "translateY(-50%)",
                 cursor: "pointer",
                 fontSize: "1.2rem",
-                color: "#888"
+                color: "#888",
               }}
             ></i>
           </div>
@@ -118,35 +128,44 @@ const handlePasswordReset = async (e: React.FormEvent) => {
 
         {/* ❌ エラーメッセージ（パスワードの下、ボタンの上） */}
         {(error || loginError) && (
-          <p className="login-error" style={{ color: "red", marginTop: "0.5rem", marginBottom: "0.5rem" }}>
+          <p
+            className="login-error"
+            style={{
+              color: "red",
+              marginTop: "0.5rem",
+              marginBottom: "0.5rem",
+            }}
+          >
             {error || loginError}
           </p>
         )}
 
-      <button
-        className="login-button"
-        type="submit"
-        disabled={isLoading}
-        style={{
-          opacity: isLoading ? 0.6 : 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0.5rem", // ← 文字與icon之間的間距
-        }}
-      >
-        {isLoading ? (
-          <>
-            <i className="bx bx-loader-circle bx-spin"></i>
-            ログイン中...
-          </>
-        ) : (
-          "ログイン"
-        )}
-      </button>
+        <button
+          className="login-button"
+          type="submit"
+          disabled={isLoading}
+          style={{
+            opacity: isLoading ? 0.6 : 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.5rem", // ← 文字與icon之間的間距
+          }}
+        >
+          {isLoading ? (
+            <>
+              <i className="bx bx-loader-circle bx-spin"></i>
+              ログイン中...
+            </>
+          ) : (
+            "ログイン"
+          )}
+        </button>
 
         {/* 🔁 パスワード忘れたリンク */}
-        <p className="login-reset-link" style={{ marginTop: "1rem", cursor: "pointer", color: "#007bff" }}
+        <p
+          className="login-reset-link"
+          style={{ marginTop: "1rem", cursor: "pointer", color: "#007bff" }}
           onClick={() => setShowResetForm(true)}
         >
           パスワードをお忘れですか？
@@ -168,18 +187,24 @@ const handlePasswordReset = async (e: React.FormEvent) => {
           className="reset-form-overlay"
           style={{
             position: "absolute",
-            top: 0, left: 0, right: 0, bottom: 0,
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
             backgroundColor: "rgba(255,255,255,0.95)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
             zIndex: 10,
-            padding: "2rem"
+            padding: "2rem",
           }}
         >
           <h3>🔁 パスワード再設定</h3>
-          <form onSubmit={handlePasswordReset} style={{ width: "100%", maxWidth: "360px" }}>
+          <form
+            onSubmit={handlePasswordReset}
+            style={{ width: "100%", maxWidth: "360px" }}
+          >
             <input
               className="login-input"
               type="email"
@@ -189,10 +214,22 @@ const handlePasswordReset = async (e: React.FormEvent) => {
               required
               style={{ marginBottom: "1rem" }}
             />
-            <button type="submit" className="login-button">リセットメール送信</button>
+            <button type="submit" className="login-button">
+              リセットメール送信
+            </button>
           </form>
-          {resetMessage && <p style={{ marginTop: "1rem", color: "green" }}>{resetMessage}</p>}
-          <button onClick={() => setShowResetForm(false)} style={{ marginTop: "1rem" }}>戻る</button>
+          {resetMessage && (
+            <p
+              style={{ marginTop: "1rem", color: "green", textAlign: "center" }}
+              dangerouslySetInnerHTML={{ __html: resetMessage }}
+            />
+          )}{" "}
+          <button
+            onClick={() => setShowResetForm(false)}
+            style={{ marginTop: "1rem" }}
+          >
+            戻る
+          </button>
         </div>
       )}
     </div>
