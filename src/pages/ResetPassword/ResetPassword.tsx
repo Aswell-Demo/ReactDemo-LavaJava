@@ -1,9 +1,9 @@
 // 🧾【このファイルの目的】
-// パスワード再設定リンクから遷移し、新しいパスワードを入力して再設定する画面
-// ・URLからoobCodeを取得
-// ・新しいパスワードを2回入力して一致確認
-// ・Firebaseにてパスワードを更新
-// ・👁️ パスワード表示/非表示の切り替えも対応
+// Firebaseのパスワード再設定リンクから遷移し、新しいパスワードを設定する画面
+// ・URLのクエリパラメータからoobCodeを取得
+// ・新しいパスワードを2回入力し、一致を確認
+// ・confirmPasswordResetでFirebaseの認証情報を更新
+// ・👁️ パスワード表示/非表示切り替えにも対応
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -23,6 +23,7 @@ const ResetPassword: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [message, setMessage] = useState("");
 
+  // ✅ oobCode（リセットトークン）をURLから取得し、確認する
   useEffect(() => {
     const code = searchParams.get("oobCode");
     if (code) {
@@ -37,9 +38,11 @@ const ResetPassword: React.FC = () => {
     }
   }, [searchParams]);
 
+  // 🔄 パスワード更新処理
   const handleReset = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // ✅ 入力確認
     if (newPassword !== confirmPassword) {
       setMessage("新しいパスワードが一致しません。もう一度ご確認ください。");
       return;
@@ -48,7 +51,7 @@ const ResetPassword: React.FC = () => {
     try {
       await confirmPasswordReset(auth, oobCode, newPassword);
       setMessage("✅ パスワードを変更しました。ログイン画面から再度ログインしてください。");
-      setConfirmed(false);
+      setConfirmed(false); // フォーム非表示
     } catch (error: any) {
       setMessage("パスワード変更に失敗しました：" + error.message);
     }
@@ -58,11 +61,13 @@ const ResetPassword: React.FC = () => {
     <div className="reset-container">
       <h2 className="reset-title">🔁 パスワード再設定</h2>
 
+      {/* 🔔 メッセージ表示 */}
       {message && <p className="reset-message">{message}</p>}
 
+      {/* 🔐 パスワード入力フォーム（oobCodeが有効なとき） */}
       {confirmed && (
         <form onSubmit={handleReset} className="reset-form">
-          {/* 🆕 新しいパスワード */}
+          {/* 🆕 新しいパスワード入力欄 */}
           <div className="reset-field">
             <label>新しいパスワード：</label>
             <div className="reset-password-wrapper">
@@ -80,7 +85,7 @@ const ResetPassword: React.FC = () => {
             </div>
           </div>
 
-          {/* ✅ 確認用パスワード */}
+          {/* ✅ パスワード確認欄 */}
           <div className="reset-field">
             <label>新しいパスワード（確認）：</label>
             <div className="reset-password-wrapper">
@@ -98,6 +103,7 @@ const ResetPassword: React.FC = () => {
             </div>
           </div>
 
+          {/* 🔘 送信ボタン */}
           <button type="submit" className="reset-button">
             パスワードを変更
           </button>
