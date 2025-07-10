@@ -225,8 +225,9 @@ const LoginForm: React.FC<{
             />
           )}{" "}
           <button
+            className="passwordResetForm-button"
             onClick={() => setShowResetForm(false)}
-            style={{ marginTop: "1rem" }}
+            style={{ marginTop: "1rem" ,}}
           >
             戻る
           </button>

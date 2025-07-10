@@ -100,6 +100,20 @@ body {
   cursor: pointer;
 }
 
+.passwordResetForm-button{
+  width: 5rem;
+  background: white;
+  font-size: .9rem;
+  border: 2px solid #0053a6;
+  border-radius: 5px;
+  transition: .2s;
+}
+
+.passwordResetForm-button:hover{
+  background:#0053a6;
+  color: white;
+}
+
 .reset-button:hover {
   background-color: #003e82;
 }
