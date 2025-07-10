@@ -160,7 +160,7 @@ const LoginForm: React.FC<{
           {isLoading ? (
             <>
               <i className="bx bx-loader-circle bx-spin"></i>
-              ログイン中...
+              ログイン中
             </>
           ) : (
             "ログイン"
