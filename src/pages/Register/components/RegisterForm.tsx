@@ -140,7 +140,7 @@ const RegisterForm: React.FC<Props> = ({ onLoginClick }) => {
             required
           />
         </div>
-
+        <div className="register-field">
         {/* 🚀 登録ボタン（ローディング表示付き） */}
         <button
           className="register-button"
@@ -163,15 +163,16 @@ const RegisterForm: React.FC<Props> = ({ onLoginClick }) => {
             "登録"
           )}
         </button>
+        </div>
       </form>
 
       {/* 🔁 ログイン画面への戻るリンク */}
-      <p className="register-login-link" style={{ marginTop: "1rem" }}>
-        すでにアカウントをお持ちの方：
-        <button className="login-button" onClick={onLoginClick}>
-          ログインへ戻る
-        </button>
-      </p>
+<div className="register-field">
+  <p className="register-login-link">すでにアカウントをお持ちの方：</p>
+  <button className="login-button" onClick={onLoginClick}>
+    ログインへ戻る
+  </button>
+</div>
     </div>
   );
 };
