@@ -51,15 +51,25 @@ const LoginForm: React.FC<{
   
 
   // 🔐 パスワードリセット送信
-  const handlePasswordReset = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await sendPasswordResetEmail(auth, resetEmail);
-      setResetMessage("パスワードリセット用のメールを送信しました。");
-    } catch (error: any) {
-      setResetMessage("送信に失敗しました：" + error.message);
-    }
-  };
+  // 🔐 パスワードリセットメール送信処理
+const handlePasswordReset = async (e: React.FormEvent) => {
+  e.preventDefault(); // 🔁 フォームのデフォルト動作を無効化
+
+  try {
+    // 📩 Firebase Auth 経由でリセットメールを送信（カスタムURLを指定）
+    await sendPasswordResetEmail(auth, resetEmail, {
+      url: "https://react-demo-lava-java.vercel.app/reset-password", // 🔗 自作ページに遷移させる
+      handleCodeInApp: true, // ✅ この設定がないと Firebase のデフォ画面が表示される
+    });
+
+    // ✅ 成功メッセージ表示
+    setResetMessage("パスワードリセット用のメールを送信しました。ご確認ください。");
+  } catch (error: any) {
+    // ❌ 失敗時のエラーメッセージ
+    setResetMessage("送信に失敗しました：" + error.message);
+  }
+};
+
 
   return (
     <div className="login-container" style={{ padding: "2rem", position: "relative" }}>

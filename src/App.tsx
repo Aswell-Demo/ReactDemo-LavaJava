@@ -18,6 +18,8 @@ import Login from "./pages/LoginPage/Login"; // ログインページ
 import Register from "./pages/Register/Register"; // 新規登録ページ
 import CustomerPage from "./pages/CustomerPage/CustomerPage"; // 顧客用ページ
 import ManagerPage from "./pages/ManagerPage/ManagerPage"; // 管理者用ページ
+import ResetPassword from "./pages/ResetPassword/ResetPassword"; // 📥 你的 reset password 頁面
+
 
 // --------------------- 🚪 アプリのルート定義とラップ構成 ---------------------
 function App() {
@@ -52,6 +54,9 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+        <Route path="/reset-password" element={<ResetPassword />} /> {/* 🆕 忘記密碼變更畫面 */}
+
         </Routes>
       </Router>
     </AuthProvider>
