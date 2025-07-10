@@ -56,16 +56,18 @@ const LoginForm: React.FC<{
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault(); // 🔁 フォームのデフォルト動作を無効化
     setIsResetting(true); // ⏳ ローディング開始
-  
+
     try {
       // 📩 Firebase Auth 経由でリセットメールを送信（カスタムURLを指定）
       await sendPasswordResetEmail(auth, resetEmail, {
         url: "https://react-demo-lava-java.vercel.app/reset-password",
         handleCodeInApp: true,
       });
-  
+
       // ✅ 成功メッセージ（\n にして JSX 側で分割表示）
-      setResetMessage("パスワードリセット用のメールを送信しました。\nご確認ください。");
+      setResetMessage(
+        "パスワードリセット用のメールを送信しました。\nご確認ください。",
+      );
     } catch (error: any) {
       // ❌ エラー表示（\n 不要、1行でOK）
       setResetMessage("送信に失敗しました：" + error.message);
@@ -73,7 +75,6 @@ const LoginForm: React.FC<{
       setIsResetting(false); // ✅ 処理終了後、ローディング状態解除
     }
   };
-  
 
   return (
     <div
@@ -187,76 +188,81 @@ const LoginForm: React.FC<{
 
       {/* 🔒 パスワードリセットフォーム（重ねて表示） */}
       {showResetForm && (
-  <div
-    className="reset-form-overlay"
-    style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: "rgba(255,255,255,0.95)",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      flexDirection: "column",
-      zIndex: 10,
-      padding: "2rem",
-    }}
-  >
-    <h3>🔁 パスワード再設定</h3>
-
-    <form
-      onSubmit={handlePasswordReset}
-      style={{ width: "100%", maxWidth: "360px" }}
-    >
-      <input
-        className="login-input"
-        type="email"
-        placeholder="メールアドレスを入力"
-        value={resetEmail}
-        onChange={(e) => setResetEmail(e.target.value)}
-        required
-        style={{ marginBottom: "1rem" }}
-      />
-
-      <button type="submit" className="login-button" disabled={isResetting}>
-        {isResetting ? (
-          <>
-            <i className="bx bx-loader-circle bx-spin"></i>
-            送信中...
-          </>
-        ) : (
-          "リセットメール送信"
-        )}
-      </button>
-    </form>
-
-    {/* 🔔 メッセージ表示（色：成功＝緑／失敗＝赤） */}
-    {resetMessage &&
-      resetMessage.split("\n").map((line, idx) => (
-        <p
-          key={idx}
+        <div
+          className="reset-form-overlay"
           style={{
-            marginTop: idx === 0 ? "1rem" : "0",
-            color: resetMessage.startsWith("送信に失敗") ? "red" : "green",
-            textAlign: "center",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(255,255,255,0.95)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            zIndex: 10,
+            padding: "2rem",
           }}
         >
-          {line}
-        </p>
-      ))}
+          <h3>🔁 パスワード再設定</h3>
 
-    <button
-      className="passwordResetForm-button"
-      onClick={() => setShowResetForm(false)}
-      style={{ marginTop: "1rem" }}
-    >
-      戻る
-    </button>
-  </div>
-)}
+          <form
+            onSubmit={handlePasswordReset}
+            style={{ width: "100%", maxWidth: "360px" }}
+          >
+            <input
+              className="login-input"
+              type="email"
+              placeholder="メールアドレスを入力"
+              value={resetEmail}
+              onChange={(e) => setResetEmail(e.target.value)}
+              required
+              style={{ marginBottom: "1rem" }}
+            />
 
+            <button
+              type="submit"
+              className="login-button"
+              disabled={isResetting}
+            >
+              {isResetting ? (
+                <>
+                  <i className="bx bx-loader-circle bx-spin"></i>
+                  送信中...
+                </>
+              ) : (
+                "リセットメール送信"
+              )}
+            </button>
+          </form>
+
+          {/* 🔔 メッセージ表示（色：成功＝緑／失敗＝赤） */}
+          {resetMessage &&
+            resetMessage.split("\n").map((line, idx) => (
+              <p
+                key={idx}
+                style={{
+                  marginTop: idx === 0 ? "1rem" : "0",
+                  color: resetMessage.startsWith("送信に失敗")
+                    ? "red"
+                    : "green",
+                  textAlign: "center",
+                }}
+              >
+                {line}
+              </p>
+            ))}
+
+          <button
+            className="passwordResetForm-button"
+            onClick={() => setShowResetForm(false)}
+            style={{ marginTop: "1rem" }}
+          >
+            戻る
+          </button>
+        </div>
+      )}
     </div>
   );
 };
