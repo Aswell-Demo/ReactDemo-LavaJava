@@ -6,52 +6,54 @@
 // ・LoginFormコンポーネントにログイン関数と登録誘導関数のみ渡す（状態管理は子コンポーネント内）
 
 // --------------------- 🔧 必要なライブラリや機能をインポート ---------------------
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // ページ遷移
-import { signInWithEmailAndPassword } from "firebase/auth"; // Firebase 認証
-import { auth } from "../../firebase"; // Firebase インスタンス
-import { useAuth } from "../../context/AuthContext"; // 認証状態とロールを取得
-import LoginForm from "./components/LoginForm"; // ログインフォームのUI部分
+import { useState, useEffect } from "react"; // ✅ 加 useState
+import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import { useAuth } from "../../context/AuthContext";
+import LoginForm from "./components/LoginForm";
 
-// --------------------- 🖼 ログインページ本体 ---------------------
 const Login = () => {
-  const navigate = useNavigate(); // ページ遷移フック
-  const { user, role } = useAuth(); // ログイン状態とロール情報を取得
+  const navigate = useNavigate();
+  const { user, role } = useAuth();
 
-  // --------------------- 🔐 ログイン処理 ---------------------
+  // ✅ 🔽 這裡是新加的錯誤訊息用的 state
+  const [loginError, setLoginError] = useState("");
+
+  // 🔐 ログイン処理
   const handleLogin = async (
     email: string,
     password: string,
-  ): Promise<string | null> => {
+  ): Promise<void> => {
     try {
-      // Firebase 認証実行
       await signInWithEmailAndPassword(auth, email, password);
       console.log("✅ ログイン成功");
-      return null; // 成功時はエラーなし
+      setLoginError(""); // 成功時清除錯誤訊息
     } catch (err: any) {
       console.error(err.message);
-      return "ログインに失敗しました。メールアドレスまたはパスワードをご確認ください。";
+      setLoginError("メールアドレスまたはパスワードが違います");
     }
   };
 
-  // --------------------- 🚪 ログイン後の自動リダイレクト ---------------------
+  // 🚪 ログイン後のリダイレクト
   useEffect(() => {
     if (user && role === "manager") {
-      navigate("/manager"); // 管理者ページへ
+      navigate("/manager");
     } else if (user && role === "顧客") {
-      navigate("/customer"); // 顧客ページへ
+      navigate("/customer");
     } else if (user && role === "unauthorized") {
       alert("このユーザーにはアクセス権限がありません。");
     }
   }, [user, role]);
 
-  // --------------------- 🖥 UIレンダリング ---------------------
   return (
     <LoginForm
       onLogin={handleLogin}
       onRegisterClick={() => navigate("/register")}
+      loginError={loginError} // ✅ 傳給子元件
     />
   );
 };
 
 export default Login;
+

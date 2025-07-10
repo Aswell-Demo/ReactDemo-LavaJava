@@ -72,7 +72,7 @@ const HeaderBar: React.FC<Props> = ({ name, role, onViewChange }) => {
 
         {/* ログアウトボタン */}
         <button className="nav-button logout-button" onClick={handleLogout}>
-          ログアウト
+        <i className='bx bx-log-in'></i>ログアウト
         </button>
       </div>
     </header>

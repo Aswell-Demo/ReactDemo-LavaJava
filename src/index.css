@@ -204,13 +204,13 @@ body{
 
 .nav-button.logout-button {
   border:1px solid #0753a6;
-  font-size: .9rem;
+  font-size: 1rem;
   border-radius: 30px;
   background-color: white;
   border-radius: 10px;
   color: #0553a6;
   transition: all 0.3s ease;
-}
+}  
 
 .nav-button.logout-button:hover {
   color: white;
@@ -470,7 +470,7 @@ body{
 }
 
 .nav-button.active {
-  background-color: #05ac75;
+  background-color: #00a8b5;
   color: white;
 }
 

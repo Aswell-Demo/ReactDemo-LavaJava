@@ -25,17 +25,21 @@ const RegisterForm: React.FC<Props> = ({ onLoginClick }) => {
   const [name, setName] = useState("");
   const [nameKana, setNameKana] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // 🔄 ローディング状態
 
   const navigate = useNavigate();
 
   // 🚀 登録処理
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (password.length < 6) {
       alert("パスワードは6文字以上で入力してください。");
       return;
     }
-    
+
+    setIsLoading(true); // ⏳ ローディング開始
+
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       await setDoc(doc(firestore, "users", email), {
@@ -54,6 +58,8 @@ const RegisterForm: React.FC<Props> = ({ onLoginClick }) => {
       } else {
         alert("登録に失敗しました：" + error.message);
       }
+    } finally {
+      setIsLoading(false); // ✅ 認証後はローディング停止
     }
   };
 
@@ -80,24 +86,34 @@ const RegisterForm: React.FC<Props> = ({ onLoginClick }) => {
         <div className="register-field">
           <label className="register-label">パスワード：</label>
           <div
-            className="register-password-wrapper"
-            style={{ display: "flex", alignItems: "center" }}
+            className="login-password-wrapper"
+            style={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center"
+            }}
           >
             <input
-              className="register-input"
+              className="login-input"
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              style={{ width: "100%", paddingRight: "2.5rem" }}
             />
-            <button
-              type="button"
-              className="toggle-password-button"
-              onClick={() => setShowPassword((prev) => !prev)}
-              style={{ marginLeft: "8px" }}
-            >
-              {showPassword ? "非表示" : "表示"}
-            </button>
+            <i
+              className={`bx ${showPassword ? "bx-show" : "bx-hide"}`}
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                fontSize: "1.2rem",
+                color: "#888"
+              }}
+            ></i>
           </div>
         </div>
 
@@ -125,9 +141,27 @@ const RegisterForm: React.FC<Props> = ({ onLoginClick }) => {
           />
         </div>
 
-        {/* 🚀 登録ボタン */}
-        <button className="register-button" type="submit">
-          登録
+        {/* 🚀 登録ボタン（ローディング表示付き） */}
+        <button
+          className="register-button"
+          type="submit"
+          disabled={isLoading}
+          style={{
+            opacity: isLoading ? 0.6 : 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.5rem"
+          }}
+        >
+          {isLoading ? (
+            <>
+              <i className="bx bx-loader-circle bx-spin"></i>
+              登録中...
+            </>
+          ) : (
+            "登録"
+          )}
         </button>
       </form>
 
